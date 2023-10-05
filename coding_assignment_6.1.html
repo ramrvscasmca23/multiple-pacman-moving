@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #container {
+            width: 1400px;
+            height: 600px;
+            margin-top: 10px;
+            border: 2px solid black;
+        }
+    </style>
+</head>
+<body>
+    <div id="container"></div>
+    <script>
+        var pacmen=[]
+        var x_pos=[]
+        var y_pos=[]
+        var x_vel=[]
+        var y_vel=[]
+        var gravity=1
+        function addPacman(){
+            var pacman=document.createElement("img");
+            var xpos=Math.random()*1300 +10
+            var ypos=Math.random()*500 +10
+            var xvel=Math.random()*20
+            var yvel=Math.random()*20
+            var container=document.getElementById("container")
+            pacman.src= "pacMan1.png"
+            document.getElementById("container").appendChild(pacman)
+            pacman.style.width="50"+'px'
+            pacman.style.left=xpos+'px'
+            pacman.style.top=ypos+'px'
+            pacman.style.position="absolute"
+            pacmen.push(pacman)
+            x_pos.push(xpos)
+            y_pos.push(ypos)
+            x_vel.push(xvel)
+            y_vel.push(yvel)
+            console.log(x_pos)
+            console.log(y_pos)
+        }
+        function movePacman(){
+            for(let i=0;i<pacmen.length;i++){
+                    x_pos[i]+=x_vel[i]
+                    y_pos[i]+=y_vel[i]
+                    pacmen[i].style.left=x_pos[i]+'px'
+                    pacmen[i].style.top=y_pos[i]+'px'
+                    if(x_vel[i]>0){
+                        if((Math.floor(x_pos[i]/x_vel[i]))%2!==0){
+                            pacmen[i].src= "pacMan1.png";
+                        }
+                        else{
+                            pacmen[i].src= "PacMan2.png";
+                        }
+                    }
+                    else{
+                        if((Math.floor(x_pos[i]/x_vel[i]))%2!==0){
+                            pacmen[i].src= "PacMan4.png";
+                        }
+                        else{
+                            pacmen[i].src= "PacMan3.png"
+                        }
+                    }
+                    if(x_pos[i] > 1350 || x_pos[i] <= 10) {
+                        x_vel[i] =-x_vel[i]*gravity
+                    }
+                    if(y_pos[i] > 550 || y_pos[i] <= 10) {
+                        y_vel[i] =-y_vel[i]*gravity
+                    }
+            }
+            setTimeout(movePacman,100)
+        }
+    </script><br>////////////////
+    <button onclick="addPacman()" style="cursor: pointer;">ADD PACMAN</button>
+    <button onclick="movePacman()" style="cursor: pointer;">MOVE</button>
+</body>
+</html>
